@@ -8,17 +8,46 @@
 
 .page-actions-cont {
   height: 3rem;
-  background-color: lightgreen;
+  display: flex;
+  align-items: flex-end;
+  background-color: #218c74;
+}
+
+.page-action {
+  margin: 0.5rem;
+  color: #f1f2f6;
 }
 
 .cellproper-actions-cont {
   height: 3rem;
-  background-color: lightcyan;
+  background-color: lightsalmon;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
 }
 
-.formula-actions-cont {
+.cellproper-actions-cont > * {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.font-family-prop {
+  padding: 0.2rem;
+}
+
+.font-size-prop {
+  padding: 0.2rem;
+}
+
+.cellproper-actions-cont > .formula-actions-cont {
   height: 3rem;
   background-color: lightcoral;
+}
+
+.cellproper-actions-cont > select {
+  border: none;
+  outline: none;
+  border-radius: 3rem;
 }
 
 .sheet-actions-count {
