@@ -3,6 +3,7 @@ let cols = 26;
 let addressColCont = document.querySelector(".address-col-cont");
 let addressRowCont = document.querySelector(".address-row-cont");
 let cellsCont = document.querySelector(".cells-cont");
+let addressBar = document.querySelector(".address-bar");
 
 for (let i = 0; i < rows; i++) {
   let addressCol = document.createElement("div");
@@ -26,6 +27,14 @@ for (let i = 0; i < rows; i++) {
     cell.setAttribute("class", "cell");
     cell.setAttribute("contenteditable", "true");
     rowCont.appendChild(cell);
+    addListenerForAddressBaeDisplay(cell, i, j);
   }
   cellsCont.appendChild(rowCont);
+}
+function addListenerForAddressBaeDisplay(cell, i, j) {
+  cell.addEventListener("click", (e) => {
+    let rowID = i + 1;
+    let colID = String.fromCharCode(j + 65);
+    addressBar.value = `${colID}${rowID}`;
+  });
 }
