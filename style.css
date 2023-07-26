@@ -162,3 +162,15 @@
   align-items: center;
   justify-content: center;
 }
+
+.row-cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell {
+  height: 2rem;
+  width: 5rem;
+  border: 1px solid #dfe4ea;
+}
