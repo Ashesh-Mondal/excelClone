@@ -18,3 +18,17 @@ for (let i = 0; i < rows; i++) {
   }
   sheetDB.push(sheetRow);
 }
+
+// Selectors for cell properties
+
+let bold = document.querySelector(".bold");
+let italic = document.querySelector(".italic");
+let underline = document.querySelector(".underline");
+let fontSize = document.querySelector(".font-size-prop");
+let fontFamily = document.querySelector(".font-family-prop");
+let alignment = document.querySelector(".alignment");
+let leftAlign = alignment[0];
+let centerAlign = alignment[1];
+let rightAlign = alignment[2];
+let fontColor = document.querySelector(".font-color-prop");
+let BGcolor = document.querySelector(".BGcolor-prop");
