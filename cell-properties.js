@@ -32,3 +32,60 @@ let centerAlign = alignment[1];
 let rightAlign = alignment[2];
 let fontColor = document.querySelector(".font-color-prop");
 let BGcolor = document.querySelector(".BGcolor-prop");
+
+// Background color for the UI
+let activeColorProp = "#d1d8e0";
+let inactiveColorProp = "#ecf0f1";
+
+// Application of two-way binding
+// Attach property listeners
+bold.addEventListener("click", (e) => {
+  let address = addressBar.value;
+  let [cell, cellProp] = activeCell(address);
+
+  // Modification
+  cellProp.bold = !cellProp.bold; // Data Change
+  cell.style.fontWeight = cellProp.bold ? "bold" : "normal"; //UI Change(Part 1)
+  bold.style.backgroundColor = cellProp.bold
+    ? activeColorProp
+    : inactiveColorProp; // UI Change(Part 2)
+});
+
+italic.addEventListener("click", (e) => {
+  let address = addressBar.value;
+  let [cell, cellProp] = activeCell(address);
+
+  // Modification
+  cellProp.italic = !cellProp.italic; // Data Change
+  cell.style.fontStyle = cellProp.italic ? "italic" : "normal"; //UI Change(Part 1)
+  italic.style.backgroundColor = cellProp.italic
+    ? activeColorProp
+    : inactiveColorProp; // UI Change(Part 2)
+});
+
+underline.addEventListener("click", (e) => {
+  let address = addressBar.value;
+  let [cell, cellProp] = activeCell(address);
+
+  // Modification
+  cellProp.underline = !cellProp.underline; // Data Change
+  cell.style.textDecoration = cellProp.underline ? "underline" : "unset"; //UI Change(Part 1)
+  underline.style.backgroundColor = cellProp.underline
+    ? activeColorProp
+    : inactiveColorProp; // UI Change(Part 2)
+});
+
+function activeCell(address) {
+  let [rid, cid] = decodeRIDCIDFromAddress(address);
+
+  // Access cell and storage object
+  let cell = document.querySelector(`.cell[rid = "${rid}"][cid = "${cid}"]`);
+  let cellProp = sheetDB[rid][cid];
+  return [cell, cellProp];
+}
+
+function decodeRIDCIDFromAddress(address) {
+  let rid = Number(address.slice(1) - 1);
+  let cid = Number(address.charCodeAt(0)) - 65;
+  return [rid, cid];
+}
