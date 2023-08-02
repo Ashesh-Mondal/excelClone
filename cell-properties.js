@@ -95,6 +95,26 @@ fontFamily.addEventListener("change", (e) => {
   fontFamily.value = cellProp.fontFamily; // UI Change(Part 2)
 });
 
+fontColor.addEventListener("change", (e) => {
+  let address = addressBar.value;
+  let [cell, cellProp] = activeCell(address);
+
+  // Modification
+  cellProp.fontColor = fontColor.value; // Data Change
+  cell.style.color = cellProp.fontColor; // UI Change(Part 1)
+  fontColor.value = cellProp.fontColor; // UI Change(Part 2)
+});
+
+BGcolor.addEventListener("change", (e) => {
+  let address = addressBar.value;
+  let [cell, cellProp] = activeCell(address);
+
+  // Modification
+  cellProp.BGcolor = BGcolor.value; // Data Change
+  cell.style.backgroundColor = cellProp.BGcolor; // UI Change(Part 1)
+  BGcolor.value = cellProp.BGcolor; // UI Change(Part 2)
+});
+
 function activeCell(address) {
   let [rid, cid] = decodeRIDCIDFromAddress(address);
 
