@@ -75,6 +75,26 @@ underline.addEventListener("click", (e) => {
     : inactiveColorProp; // UI Change(Part 2)
 });
 
+fontSize.addEventListener("change", (e) => {
+  let address = addressBar.value;
+  let [cell, cellProp] = activeCell(address);
+
+  // Modification
+  cellProp.fontSize = fontSize.value; // Data Change
+  cell.style.fontSize = cellProp.fontSize + "px"; // UI Change(Part 1)
+  fontSize.value = cellProp.fontSize; // UI Change(Part 2)
+});
+
+fontFamily.addEventListener("change", (e) => {
+  let address = addressBar.value;
+  let [cell, cellProp] = activeCell(address);
+
+  // Modification
+  cellProp.fontFamily = fontFamily.value; // Data Change
+  cell.style.fontFamily = cellProp.fontFamily; // UI Change(Part 1)
+  fontFamily.value = cellProp.fontFamily; // UI Change(Part 2)
+});
+
 function activeCell(address) {
   let [rid, cid] = decodeRIDCIDFromAddress(address);
 
