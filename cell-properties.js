@@ -26,14 +26,14 @@ let italic = document.querySelector(".italic");
 let underline = document.querySelector(".underline");
 let fontSize = document.querySelector(".font-size-prop");
 let fontFamily = document.querySelector(".font-family-prop");
-let alignment = document.querySelector(".alignment");
+let alignment = document.querySelectorAll(".alignment");
 let leftAlign = alignment[0];
 let centerAlign = alignment[1];
 let rightAlign = alignment[2];
 let fontColor = document.querySelector(".font-color-prop");
 let BGcolor = document.querySelector(".BGcolor-prop");
 
-// Background color for the UI
+// Background color of the icon for the UI
 let activeColorProp = "#d1d8e0";
 let inactiveColorProp = "#ecf0f1";
 
@@ -113,6 +113,36 @@ BGcolor.addEventListener("change", (e) => {
   cellProp.BGcolor = BGcolor.value; // Data Change
   cell.style.backgroundColor = cellProp.BGcolor; // UI Change(Part 1)
   BGcolor.value = cellProp.BGcolor; // UI Change(Part 2)
+});
+
+alignment.forEach((alignElem) => {
+  alignElem.addEventListener("click", (e) => {
+    let address = addressBar.value;
+    let [cell, cellProp] = activeCell(address);
+
+    // Modification
+    let alignValue = e.target.classList[0];
+    cellProp.alignment = alignValue; // Data Change
+    cell.style.textAlign = cellProp.alignment; // UI Change(Part 1)
+    // UI CHange(Part 2)
+    switch (alignValue) {
+      case "left":
+        leftAlign.style.backgroundColor = activeColorProp;
+        centerAlign.style.backgroundColor = inactiveColorProp;
+        rightAlign.style.backgroundColor = inactiveColorProp;
+        break;
+      case "center":
+        leftAlign.style.backgroundColor = inactiveColorProp;
+        centerAlign.style.backgroundColor = activeColorProp;
+        rightAlign.style.backgroundColor = inactiveColorProp;
+        break;
+      case "right":
+        leftAlign.style.backgroundColor = inactiveColorProp;
+        centerAlign.style.backgroundColor = inactiveColorProp;
+        rightAlign.style.backgroundColor = activeColorProp;
+        break;
+    }
+  });
 });
 
 function activeCell(address) {
