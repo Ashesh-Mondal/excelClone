@@ -14,6 +14,12 @@ let formulaBar = document.querySelector(".formula-bar");
 formulaBar.addEventListener("keydown", (e) => {
   let inputFormula = formulaBar.value;
   if (e.key === "Enter" && inputFormula) {
+    // If change in formula, break old Parent-Child relation, evaluate new formula, add new Parent-Child relation
+    let address = addressBar.value;
+    let [cell, cellProp] = getCellAndCellProp(address);
+    if (inputFormula !== cellProp.formula)
+      removeChildFromParent(cellProp.formula);
+
     let evaluatedValue = evaluateFormula(inputFormula);
 
     // To Update UI and cellProp in DB
@@ -30,6 +36,19 @@ function addChildToParent(formula) {
     if (asciiValue >= 65 && asciiValue <= 90) {
       let [parentCell, parentCellProp] = getCellAndCellProp(encodedFormula[i]);
       parentCellProp.children.push(childAddress);
+    }
+  }
+}
+
+function removeChildFromParent(formula) {
+  let childAddress = addressBar.value;
+  let encodedFormula = formula.split(" ");
+  for (let i = 0; i < encodedFormula.length; i++) {
+    let asciiValue = encodedFormula[i].charCodeAt(0);
+    if (asciiValue >= 65 && asciiValue <= 90) {
+      let [parentCell, parentCellProp] = getCellAndCellProp(encodedFormula[i]);
+      let idx = parentCellProp.children.indexOf(childAddress);
+      parentCellProp.children.splice(idx, 1);
     }
   }
 }
