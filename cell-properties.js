@@ -15,6 +15,7 @@ for (let i = 0; i < rows; i++) {
       BGcolor: "#000000", // Just for ientification purpose
       value: "",
       formula: "",
+      children: [],
     };
     sheetRow.push(cellProp);
   }

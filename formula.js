@@ -18,8 +18,21 @@ formulaBar.addEventListener("keydown", (e) => {
 
     // To Update UI and cellProp in DB
     setCellUIAndCellProp(evaluatedValue, inputFormula);
+    addChildToParent(inputFormula);
   }
 });
+
+function addChildToParent(formula) {
+  let childAddress = addressBar.value;
+  let encodedFormula = formula.split(" ");
+  for (let i = 0; i < encodedFormula.length; i++) {
+    let asciiValue = encodedFormula[i].charCodeAt(0);
+    if (asciiValue >= 65 && asciiValue <= 90) {
+      let [parentCell, parentCellProp] = getCellAndCellProp(encodedFormula[i]);
+      parentCellProp.children.push(childAddress);
+    }
+  }
+}
 
 function evaluateFormula(formula) {
   let encodedFormula = formula.split(" ");
