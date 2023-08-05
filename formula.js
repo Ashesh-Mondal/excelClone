@@ -23,10 +23,26 @@ formulaBar.addEventListener("keydown", (e) => {
     let evaluatedValue = evaluateFormula(inputFormula);
 
     // To Update UI and cellProp in DB
-    setCellUIAndCellProp(evaluatedValue, inputFormula);
+    setCellUIAndCellProp(evaluatedValue, inputFormula, address);
     addChildToParent(inputFormula);
+    updateChildrenCells(address);
   }
 });
+
+function updateChildrenCells(parentAddress) {
+  let [parentCell, parentCellProp] = getCellAndCellProp(parentAddress);
+  let children = parentCellProp.children;
+
+  for (let i = 0; i < children.length; i++) {
+    let childAddress = children[i];
+    let [childCell, childCellProp] = getCellAndCellProp(childAddress);
+    let childFormula = childCellProp.formula;
+
+    let evaluatedValue = evaluateFormula(childFormula);
+    setCellUIAndCellProp(evaluatedValue, childFormula, childAddress);
+    updateChildrenCells(childAddress);
+  }
+}
 
 function addChildToParent(formula) {
   let childAddress = addressBar.value;
@@ -66,8 +82,7 @@ function evaluateFormula(formula) {
   return eval(decodedFormula);
 }
 
-function setCellUIAndCellProp(evaluatedValue, formula) {
-  let address = addressBar.value;
+function setCellUIAndCellProp(evaluatedValue, formula, address) {
   let [cell, cellProp] = getCellAndCellProp(address);
 
   // UI Update
