@@ -203,6 +203,9 @@ function addListernerToAttachCellProperties(cell) {
         rightAlign.style.backgroundColor = activeColorProp;
         break;
     }
+    let formulaBar = document.querySelector(".formula-bar");
+    formulaBar.value = cellProp.formula;
+    cell.value = cellProp.value;
   });
 }
 
