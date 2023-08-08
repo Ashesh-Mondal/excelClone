@@ -28,6 +28,8 @@ formulaBar.addEventListener("keydown", (e) => {
     if (inputFormula !== cellProp.formula)
       removeChildFromParent(cellProp.formula);
 
+    addChildToGraphComponent(inputFormula, address);
+
     let evaluatedValue = evaluateFormula(inputFormula);
 
     // To Update UI and cellProp in DB
@@ -36,6 +38,19 @@ formulaBar.addEventListener("keydown", (e) => {
     updateChildrenCells(address);
   }
 });
+
+function addChildToGraphComponent(formula, childAddress) {
+  let [crid, ccid] = decodeRIDCIDFromAddress(childAddress);
+  let encodedFormula = formula.split(" ");
+  for (let i = 0; i < encodedFormula.length; i++) {
+    let asciiValue = encodedFormula[i].charCodeAt(0);
+    if (asciiValue >= 65 && asciiValue <= 90) {
+      let [prid, pcid] = decodeRIDCIDFromAddress(encodedFormula[i]);
+      // rid -> i, cid -> j
+      graphComponentMatrix[prid][pcid].push([crid, ccid]);
+    }
+  }
+}
 
 function updateChildrenCells(parentAddress) {
   let [parentCell, parentCellProp] = getCellAndCellProp(parentAddress);
