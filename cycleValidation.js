@@ -1,14 +1,15 @@
+let collectedGraphComponent = [];
 // Storage --> 2D Array (Basic needed)
-let graphComponentMatrix = [];
+// let graphComponentMatrix = [];
 
-for (let i = 0; i < rows; i++) {
-  let row = [];
-  for (let j = 0; j < cols; j++) {
-    // Why Array --> More than 1 child relation(dependency)
-    row.push([]);
-  }
-  graphComponentMatrix.push(row);
-}
+// for (let i = 0; i < rows; i++) {
+//   let row = [];
+//   for (let j = 0; j < cols; j++) {
+//     // Why Array --> More than 1 child relation(dependency)
+//     row.push([]);
+//   }
+//   graphComponentMatrix.push(row);
+// }
 
 // True -> Cyclic, False -> Not Cyclic
 // Giving us the response
