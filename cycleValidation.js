@@ -1,6 +1,6 @@
 let collectedGraphComponent = [];
 // Storage --> 2D Array (Basic needed)
-// let graphComponentMatrix = [];
+let graphComponentMatrix = [];
 
 // for (let i = 0; i < rows; i++) {
 //   let row = [];

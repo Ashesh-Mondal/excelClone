@@ -12,9 +12,46 @@ addSheetBtn.addEventListener("click", (e) => {
   } </div>`;
 
   sheetsFolderCont.appendChild(sheet);
+  //   DB
   createSheetDB();
   createGraphComponentMatrix();
+  handleSheetActiveness(sheet);
+  sheet.click();
 });
+
+function handleSheetDB(sheetIdx) {
+  sheetDB = collectedSheetDB[sheetIdx];
+  graphComponentMatrix = collectedGraphComponent[sheetIdx];
+}
+
+function handleSheetProperties() {
+  for (let i = 0; i < rows; i++) {
+    for (j = 0; j < cols; j++) {
+      let cell = document.querySelector(`.cell[rid = "${i}"][cid = "${j}"]`);
+      cell.click();
+    }
+  }
+  // By default click on first cell via DOM
+  let firstCell = document.querySelector(".cell");
+  firstCell.click();
+}
+
+function handleSheetUI(sheet) {
+  let allSheetFolder = document.querySelectorAll(".sheet-folder");
+  for (let i = 0; i < allSheetFolder.length; i++) {
+    allSheetFolder[i].style.backgroundColor = "transparent";
+  }
+  sheet.style.backgroundColor = "#ced6e0";
+}
+
+function handleSheetActiveness(sheet) {
+  sheet.addEventListener("click", (e) => {
+    let sheetIdx = Number(sheet.getAttribute("id"));
+    handleSheetDB(sheetIdx);
+    handleSheetProperties();
+    handleSheetUI(sheet);
+  });
+}
 
 function createSheetDB() {
   let sheetDB = [];
