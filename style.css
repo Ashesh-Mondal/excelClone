@@ -105,19 +105,34 @@
   width: 2vw;
 }
 
+.sheet-add-icon:hover {
+  width: 2vw;
+  cursor: pointer;
+}
+
 .sheets-folder-cont {
   display: flex;
   align-items: center;
   height: 80%;
   width: 5rem;
   width: calc(100vw - 2vw);
+  overflow: auto;
 }
 
 .sheet-folder {
+  height: 80%;
   text-decoration: underline;
   font-weight: bold;
   text-decoration-thickness: 2px;
   font-size: 0.9rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sheet-content {
+  width: 5rem;
 }
 
 .grid-cont {
