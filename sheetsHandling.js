@@ -1,3 +1,4 @@
+let activeSheetColor = "#ced6e0";
 let sheetsFolderCont = document.querySelector(".sheets-folder-cont");
 let addSheetBtn = document.querySelector(".sheet-add-icon");
 addSheetBtn.addEventListener("click", (e) => {
@@ -16,8 +17,47 @@ addSheetBtn.addEventListener("click", (e) => {
   createSheetDB();
   createGraphComponentMatrix();
   handleSheetActiveness(sheet);
+  handleSheetRemoval(sheet);
   sheet.click();
 });
+
+function handleSheetRemoval(sheet) {
+  sheet.addEventListener("contextmenu", (e) => {
+    // To represent right click
+    let allSheetFolder = document.querySelectorAll(".sheet-folder");
+    if (allSheetFolder.length === 1) {
+      alert("You need to have atleat one sheet!!");
+      return;
+    }
+    let response = confirm(
+      "Your sheet will be removed permanently, Are you sure?"
+    );
+    if (response === false) return;
+    let sheetIdx = Number(sheet.getAttribute("id"));
+    // DB
+    collectedSheetDB.splice(sheetIdx, 1);
+    collectedGraphComponent.splice(sheetIdx, 1);
+    // UI
+    handleSheetUIRemoval(sheet);
+    // By default assign DB to sheet 1 (active)
+    sheetDB = collectedSheetDB[0];
+    graphComponentMatrix = collectedGraphComponent[0];
+    handleSheetProperties();
+  });
+}
+
+function handleSheetUIRemoval(sheet) {
+  // UI
+  sheet.remove();
+  let allSheetFolder = document.querySelectorAll(".sheet-folder");
+  for (let i = 0; i < allSheetFolder.length; i++) {
+    allSheetFolder[i].setAttribute("id", i);
+    let sheetContent = allSheetFolder[i].querySelector(".sheet-content");
+    sheetContent.innerText = `Sheet ${i + 1}`;
+    allSheetFolder[i].style.backgroundColor = "transparent";
+  }
+  allSheetFolder[0].style.backgroundColor = activeSheetColor;
+}
 
 function handleSheetDB(sheetIdx) {
   sheetDB = collectedSheetDB[sheetIdx];
@@ -41,7 +81,7 @@ function handleSheetUI(sheet) {
   for (let i = 0; i < allSheetFolder.length; i++) {
     allSheetFolder[i].style.backgroundColor = "transparent";
   }
-  sheet.style.backgroundColor = "#ced6e0";
+  sheet.style.backgroundColor = activeSheetColor;
 }
 
 function handleSheetActiveness(sheet) {
