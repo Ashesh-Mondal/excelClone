@@ -13,7 +13,7 @@ addSheetBtn.addEventListener("click", (e) => {
   } </div>`;
 
   sheetsFolderCont.appendChild(sheet);
-  //   DB
+  // DB
   createSheetDB();
   createGraphComponentMatrix();
   handleSheetActiveness(sheet);

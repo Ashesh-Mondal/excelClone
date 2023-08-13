@@ -19,6 +19,12 @@
   color: #f1f2f6;
 }
 
+.page-action:hover {
+  margin: 0.5rem;
+  color: #f1f2f6;
+  cursor: pointer;
+}
+
 .cellprop-actions-cont {
   height: 3rem;
   background-color: #ecf0f1;
