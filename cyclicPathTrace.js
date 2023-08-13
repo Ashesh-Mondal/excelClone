@@ -1,4 +1,13 @@
-function isGraphCyclicTracePath(graphComponentMatrix, cycleResponse) {
+// For delay and wait
+function colorPromise() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, 1000);
+  });
+}
+
+async function isGraphCyclicTracePath(graphComponentMatrix, cycleResponse) {
   let [srcr, srcc] = cycleResponse;
   let visited = [];
   let dfsVisited = [];
@@ -13,33 +22,19 @@ function isGraphCyclicTracePath(graphComponentMatrix, cycleResponse) {
     dfsVisited.push(dfsVisitedRow);
   }
 
-  //   for (let i = 0; i < rows; i++) {
-  //     for (let j = 0; j < cols; j++) {
-  //       if (visited[i][j] === false) {
-  //         let response = dfsCyclicDetection(
-  //           graphComponentMatrix,
-  //           i,
-  //           j,
-  //           visited,
-  //           dfsVisited
-  //         );
-  //         if (response == true) return true;
-  //       }
-  //     }
-  //   }
-  let response = dfsCyclicDetection(
+  let response = await dfsCyclicDetectionTracePath(
     graphComponentMatrix,
     srcr,
     srcc,
     visited,
     dfsVisited
   );
-  if (response === true) return true;
-  return false;
+  if (response === true) return Promise.resolve(true);
+  return Promise.resolve(false);
 }
 
 // Coloring cells for traking
-function dfsCyclicDetectionTracePath(
+async function dfsCyclicDetectionTracePath(
   graphComponentMatrix,
   srcr,
   srcc,
@@ -51,6 +46,7 @@ function dfsCyclicDetectionTracePath(
 
   let cell = document.querySelector(`.cell[rid = "${srcr}"][cid = "${srcc}"]`);
   cell.style.backgroundColor = "lightblue";
+  await colorPromise();
 
   for (
     let children = 0;
@@ -59,7 +55,7 @@ function dfsCyclicDetectionTracePath(
   ) {
     let [nbrr, nbrc] = graphComponentMatrix[srcr][srcc][children];
     if (visited[nbrr][nbrc] === false) {
-      let response = dfsCyclicDetection(
+      let response = await dfsCyclicDetectionTracePath(
         graphComponentMatrix,
         nbrr,
         nbrc,
@@ -68,7 +64,8 @@ function dfsCyclicDetectionTracePath(
       );
       if (response === true) {
         cell.style.backgroundColor = "transparent";
-        return true;
+        await colorPromise();
+        return Promise.resolve(true);
       }
     } else if (
       visited[nbrr][nbrc] === true &&
@@ -78,11 +75,15 @@ function dfsCyclicDetectionTracePath(
         `.cell[rid = "${nbrr}"][cid = "${nbrc}"]`
       );
       cyclicCell.style.backgroundColor = "lightsalmon";
+      await colorPromise();
       cyclicCell.style.backgroundColor = "transparent";
-      return true;
+      await colorPromise();
+      cell.style.backgroundColor = "transparent";
+      await colorPromise();
+      return Promise.resolve(true);
     }
   }
 
   dfsVisited[srcr][srcc] = false;
-  return false;
+  return Promise.resolve(false);
 }
