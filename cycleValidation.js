@@ -38,11 +38,11 @@ function isGraphCyclic(graphComponentMatrix) {
           dfsVisited
         );
         // Found cyclic so return immediately, no need to explore more path
-        if (response == true) return true;
+        if (response == true) return [i, j];
       }
     }
   }
-  return false;
+  return null;
 }
 
 // Detection of the cyclic graph or not
