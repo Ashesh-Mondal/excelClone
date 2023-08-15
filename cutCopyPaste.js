@@ -49,10 +49,13 @@ let copyData = [];
 copyBtn.addEventListener("click", (e) => {
   if (rangeStorage.length < 2) return;
   copyData = [];
-  let strow = rangeStorage[0][0];
-  let stcol = rangeStorage[0][1];
-  let endrow = rangeStorage[1][0];
-  let endcol = rangeStorage[1][1];
+
+  let [strow, stcol, endrow, endcol] = [
+    rangeStorage[0][0],
+    rangeStorage[0][1],
+    rangeStorage[1][0],
+    rangeStorage[1][1],
+  ];
   for (let i = strow; i <= endrow; i++) {
     let copyRow = [];
     for (let j = stcol; j <= endcol; j++) {
@@ -62,6 +65,39 @@ copyBtn.addEventListener("click", (e) => {
     copyData.push(copyRow);
   }
   defaultSelectedCellsUI();
+});
+
+cutBtn.addEventListener("click", (e) => {
+  if (rangeStorage.length < 2) return;
+
+  let [strow, stcol, endrow, endcol] = [
+    rangeStorage[0][0],
+    rangeStorage[0][1],
+    rangeStorage[1][0],
+    rangeStorage[1][1],
+  ];
+
+  for (let i = strow; i <= endrow; i++) {
+    for (let j = stcol; j <= endcol; j++) {
+      let cellProp = sheetDB[i][j];
+      let cell = document.querySelector(`.cell[rid = "${i}"][cid = "${j}"]`);
+
+      //   DB work
+      cellProp.value = "";
+      cellProp.bold = false;
+      cellProp.italic = false;
+      cellProp.underline = false;
+      cellProp.fontSize = "14";
+      cellProp.fontFamily = "monospace";
+      cellProp.fontColor = "#000000";
+      cellProp.BGcolor = "#000000";
+      cellProp.alignment = "left";
+
+      //   UI work
+      cell.click();
+      defaultSelectedCellsUI();
+    }
+  }
 });
 
 pasteBtn.addEventListener("click", (e) => {
