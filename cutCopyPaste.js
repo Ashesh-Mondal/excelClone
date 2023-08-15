@@ -61,3 +61,41 @@ copyBtn.addEventListener("click", (e) => {
   }
   defaultSelectedCellsUI();
 });
+
+pasteBtn.addEventListener("click", (e) => {
+  // Paste cells data work
+  if (rangeStorage.length < 2) return;
+
+  // Difference
+  let rowDiff = Math.abs(rangeStorage[0][0] - rangeStorage[1][0]);
+  let colDiff = Math.abs(rangeStorage[0][1] - rangeStorage[1][1]);
+
+  // Target
+  let address = addressBar.value;
+  let [stRow, stCol] = decodeRIDCIDFromAddress(address);
+
+  // r -> refers copyData row
+  // c -> refers copyData column
+  for (let i = stRow, r = 0; i <= stRow + rowDiff; i++, r++) {
+    for (let j = stCol, c = 0; j <= stCol + colDiff; j++, c++) {
+      let cell = document.querySelector(`.cell[rid = "${i}"][cid = "${j}"]`);
+      if (!cell) continue;
+      // DB changes
+      let data = copyData[r][c];
+      let cellProp = sheetDB[i][j];
+
+      cellProp.value = data.value;
+      cellProp.bold = data.bold;
+      cellProp.italic = data.italic;
+      cellProp.underline = data.underline;
+      cellProp.fontSize = data.fontSize;
+      cellProp.fontFamily = data.fontFamily;
+      cellProp.fontColor = data.fontColor;
+      cellProp.BGcolor = data.BGcolor;
+      cellProp.alignment = data.alignment;
+
+      // UI changes
+      cell.click();
+    }
+  }
+});
