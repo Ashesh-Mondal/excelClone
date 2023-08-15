@@ -11,3 +11,34 @@ downloadBtn.addEventListener("click", (e) => {
   a.download = "SheetData.json";
   a.click();
 });
+
+// Open File (uploading)
+openBtn.addEventListener("click", (e) => {
+  // Open's file explorer
+  let input = document.createElement("input");
+  input.setAttribute("type", "file");
+  input.click();
+
+  input.addEventListener("change", (e) => {
+    let fr = new FileReader();
+    let files = input.files;
+    let fileObj = files[0];
+
+    fr.readAsText(fileObj);
+    fr.addEventListener("load", (e) => {
+      let readSheetData = JSON.parse(fr.result);
+
+      //   Basic sheet with default data will be created
+      addSheetBtn.click();
+
+      //   SheetDB, graphComponent
+      sheetDB = readSheetData[0];
+      graphComponentMatrix = readSheetData[1];
+      collectedSheetDB[collectedSheetDB.length - 1] = sheetDB;
+      collectedGraphComponent[collectedGraphComponent.length - 1] =
+        graphComponentMatrix;
+
+      handleSheetProperties();
+    });
+  });
+});
