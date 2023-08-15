@@ -47,6 +47,8 @@ function defaultSelectedCellsUI() {
 
 let copyData = [];
 copyBtn.addEventListener("click", (e) => {
+  if (rangeStorage.length < 2) return;
+  copyData = [];
   let strow = rangeStorage[0][0];
   let stcol = rangeStorage[0][1];
   let endrow = rangeStorage[1][0];
